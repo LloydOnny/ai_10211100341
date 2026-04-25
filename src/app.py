@@ -30,15 +30,32 @@ configure_logging()
 st.set_page_config(page_title="Academic City RAG Chatbot", layout="wide")
 st.title("Academic City RAG Chatbot (Manual RAG + Hybrid Search)")
 
-if "retriever" not in st.session_state:
-    st.session_state["retriever"] = RAGRetriever(k=5)
+@st.cache_resource
+def load_retriever():
+    """Cache the retriever to avoid reloading FAISS index on every interaction."""
+    try:
+        return RAGRetriever(k=5)
+    except FileNotFoundError as e:
+        st.error(f"❌ Missing index files: {e}")
+        st.info("**To deploy on Streamlit Cloud:**\n1. Run `python src/embedding_index.py` locally\n2. Commit the indices to git\n3. Redeploy")
+        return None
+
+try:
+    retriever = load_retriever()
+    if retriever is None:
+        st.stop()
+except Exception as e:
+    st.error(f"❌ Error loading retriever: {e}")
+    st.stop()
+
 if "chat_history" not in st.session_state:
     st.session_state["chat_history"] = []
 
+# Get API key from secrets or user input
 api_key = st.sidebar.text_input(
     "Enter your OpenAI API key",
     type="password",
-    value=os.getenv("OPENAI_API_KEY", ""),
+    value=st.secrets.get("openai_api_key", os.getenv("OPENAI_API_KEY", "")),
 )
 template_id = st.sidebar.selectbox(
     "Response style",
@@ -63,7 +80,7 @@ if use_memory and st.session_state["chat_history"]:
 
 if query:
     with st.spinner("Retrieving (dense + keyword + fusion)..."):
-        results, expansion_detail = st.session_state["retriever"].retrieve(query)
+        results, expansion_detail = retriever.retrieve(query)
 
     with st.expander("Query expansion & retrieval variants", expanded=False):
         st.markdown(expansion_detail.get("expansion_note", ""))
