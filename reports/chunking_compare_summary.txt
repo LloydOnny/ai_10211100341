@@ -1,0 +1,9 @@
+Chunking comparison (Lloyd Onny — 10211100341)
+A: chunk_size=500, overlap=50
+B: chunk_size=800, overlap=120
+
+{'query': 'What does the 2025 budget say about fiscal deficit and debt?', 'l2_top1_A': 0.537746787071228, 'l2_top1_B': 0.607796311378479, 'top1_len_A': 455, 'top1_len_B': 772, 'token_jaccard_top1': 0.2308}
+{'query': 'tax revenue mobilization Ghana 2025', 'l2_top1_A': 0.4899936020374298, 'l2_top1_B': 0.43146079778671265, 'top1_len_A': 411, 'top1_len_B': 669, 'token_jaccard_top1': 0.1327}
+{'query': 'NPP votes Ashanti Region 2020 election results', 'l2_top1_A': 0.6526187062263489, 'l2_top1_B': 0.6526187062263489, 'top1_len_A': 185, 'top1_len_B': 185, 'token_jaccard_top1': 1.0}
+{'query': 'GDP growth macroeconomic outlook', 'l2_top1_A': 0.573285698890686, 'l2_top1_B': 0.5805636644363403, 'top1_len_A': 467, 'top1_len_B': 764, 'token_jaccard_top1': 0.6286}
+{'query': 'capital expenditure infrastructure budget', 'l2_top1_A': 0.8014686107635498, 'l2_top1_B': 0.7848896980285645, 'top1_len_A': 412, 'top1_len_B': 706, 'token_jaccard_top1': 0.0957}

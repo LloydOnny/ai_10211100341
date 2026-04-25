@@ -1,0 +1,3 @@
+- [ ] Project scaffolded for Streamlit-based RAG chatbot for Academic City (manual RAG, no LangChain/LlamaIndex)
+- [ ] Data, src, and .github folders created
+- [ ] Next: Download datasets and set up requirements.txt
